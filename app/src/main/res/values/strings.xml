@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="completed">Completed</string>
+    <string name="delete">Delete</string>
+    <string name="gamelist">Display the list of Teams</string>
+    <string name="teammap">Display the Map</string>
+    <string name="teamsettings">Display the Settings</string>
+    <string name="new1">New</string>
+    <string name="enter_an_item">Enter a Game Name</string>
+</resources>
