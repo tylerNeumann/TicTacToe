@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class GameAdapter extends RecyclerView.Adapter {
-    private static final String TAG = "myDebug";
+    private static final String TAG = "GameAdapter";
     private ArrayList<Game> gameData;
     private View.OnClickListener onClickListener;
     private Context parentContext;
@@ -69,7 +69,7 @@ public class GameAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // retrieve and inflate the list_item.xml
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_item, parent, false );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false );
         return new TeamViewHolder(view);
     }
 
@@ -78,13 +78,12 @@ public class GameAdapter extends RecyclerView.Adapter {
         TeamViewHolder teamViewHolder = (TeamViewHolder) holder;
 
         Game game = gameData.get(position);
-
         // Bind to the screen
         teamViewHolder.getTextPlayer1().setText(game.getPlayer1());
         teamViewHolder.getTextPlayer2().setText(game.getPlayer2());
         teamViewHolder.getTextName().setText(game.getConnectionId());
         //teamViewHolder.getImageButtonPhoto().setImageResource(team.getImgId());
-        teamViewHolder.getChkCompleted().setChecked(game.getCompleted());
+        //teamViewHolder.getChkCompleted().setChecked(game.getCompleted());
 
         //Log.d(TAG, "onBindViewHolder: Completed: " + game.getId() + ":" +  game.getCompleted());
 
@@ -102,7 +101,7 @@ public class GameAdapter extends RecyclerView.Adapter {
         else
         {
             //Log.d(TAG, "onBindViewHolder: Not Deleting: " + isDeleting);
-            teamViewHolder.getBtnDelete().setVisibility(View.INVISIBLE);
+           teamViewHolder.getBtnDelete().setVisibility(View.INVISIBLE);
         }
 
     }
