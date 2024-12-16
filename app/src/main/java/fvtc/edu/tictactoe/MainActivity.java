@@ -326,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
                                             game.getConnectionId());
                                     //turn = turn == "X" ? "O" : "X";
                                     playerPiece = playerPiece.equals("X") ? "O" : "X"; // Change the turn
+                                    game.setTurn(playerPiece);
                                     //Log.d(TAG, "onTouch: " + Arrays.deepToString(cellvalues));
                                     if (board.checkVictory() != "0") {
                                         displayVictory();
