@@ -13,12 +13,17 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.microsoft.signalr.HubConnection;
+import com.microsoft.signalr.HubConnectionBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Game game;
     String username;
     private String hubConnectionId;
-    //HubConnection hubConnection;
+    HubConnection hubConnection;
     String turn = "O"; // Starting player
     String playerPiece = "E";
 
@@ -165,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSignalRGroup(String from, String msg, String groupName) {
 
-        /*hubConnection = HubConnectionBuilder
+        hubConnection = HubConnectionBuilder
                 .create("https://fvtcdp.azurewebsites.net/GameHub")
                 .build();
 
@@ -213,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         // Send a message
         Log.d(TAG, "initSignalRGroup: Joining " + groupName);
         hubConnection.send("JoinGame", groupName, from);
-        Log.d(TAG, "initSignalRGroup: " + from + " joined " + groupName);*/
+        Log.d(TAG, "initSignalRGroup: " + from + " joined " + groupName);
 
     }
 
@@ -288,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 String result= board.hitTest(pt, playerPiece);
 
                 if(result != "-1") {
-                    //hubConnection.send("SendTurnMessage", username, result + ":" + game.getGameState(), game.getConnectionId());
+                    hubConnection.send("SendTurnMessage", username, result + ":" + game.getGameState(), game.getConnectionId());
                     //Log.d(TAG, "onTouch: " + Arrays.deepToString(cellvalues));
                     if(game.getPlayer2().equals("Computer"))
                         playerPiece = playerPiece.equals("X") ? "O" : "X"; // Change the turn
@@ -314,9 +319,9 @@ public class MainActivity extends AppCompatActivity {
                                 pt.y = computerSelect.centerY();
                                 if (board.hitTest(pt, playerPiece) != "-1") {
                                     Log.d(TAG, "onTouch: GameState: " + game.getGameState() );
-                                   /* hubConnection.send("SendTurnMessage", "Computer", playerPiece
+                                    hubConnection.send("SendTurnMessage", "Computer", playerPiece
                                                     + ":" + row + ":" + col + ":" + game.getGameState(),
-                                            game.getConnectionId());*/
+                                            game.getConnectionId());
                                     //turn = turn == "X" ? "O" : "X";
                                     playerPiece = playerPiece.equals("X") ? "O" : "X"; // Change the turn
                                     //Log.d(TAG, "onTouch: " + Arrays.deepToString(cellvalues));
@@ -342,18 +347,18 @@ public class MainActivity extends AppCompatActivity {
         private void displayVictory() {
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-            //View popupView = inflater.inflate(R.layout.popup, null);
+            View popupView = inflater.inflate(R.layout.popup, null);
 
 
             // create the popup window
             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
             boolean focusable = true; // lets taps outside the popup also dismiss it
-            //final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
             // show the popup window
-            //popupWindow.showAtLocation(this, Gravity.CENTER, 0, 0);
-            //TextView tvVictory = (TextView) popupWindow.getContentView().findViewById(R.id.tvVictory);
+            popupWindow.showAtLocation(this, Gravity.CENTER, 0, 0);
+            TextView tvVictory = (TextView) popupWindow.getContentView().findViewById(R.id.tvVictory);
             String message;
             String result = board.checkVictory();
 
@@ -371,10 +376,10 @@ public class MainActivity extends AppCompatActivity {
             saveToAPI(game, false);
 
             //Log.d(TAG, "displayVictory: Computer" + ":" +  message + ":" + game.getConnectionId());
-            //hubConnection.send("SendMessageToGroup", "Computer", message, game.getConnectionId());
+            hubConnection.send("SendMessageToGroup", "Computer", message, game.getConnectionId());
 
             // dismiss the popup window when touched
-            /*popupView.setOnTouchListener(new OnTouchListener() {
+            popupView.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     popupWindow.dismiss();
@@ -385,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
                     invalidate();
                     return true;
                 }
-            });*/
+            });
         }
 
         @Override
