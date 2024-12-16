@@ -4,6 +4,32 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Game {
+
+
+    private UUID Id;
+    private String ConnectionId;
+    private String Player1;
+    private String Player2;
+    private String Winner;
+    private String Turn;
+    private Boolean Completed;
+    private LocalDate LastUpdateDate;
+    private String GameState;
+
+    public Game(String player1, String name, String player2)
+    {
+        this.setPlayer1(player1);
+        this.setPlayer2(player2);
+        this.setConnectionId(name);
+        this.setGameState("E|E|E|E|E|E|E|E|E");
+        this.setCompleted(false);
+    }
+    public Game()
+    {
+        this.setGameState("E|E|E|E|E|E|E|E|E");
+        this.setCompleted(false);
+    }
+
     public UUID getId() {
         return Id;
     }
@@ -11,8 +37,6 @@ public class Game {
     public void setId(UUID id) {
         Id = id;
     }
-
-    private UUID Id;
 
     public String getConnectionId() {
         return ConnectionId;
@@ -70,25 +94,7 @@ public class Game {
         GameState = gameState;
     }
 
-    private String ConnectionId;
-    private String Player1;
-    private String Player2;
-    private String Winner;
-    private Boolean Completed;
-    private LocalDate LastUpdateDate;
-    private String GameState;
+    public String getTurn() { return Turn; }
 
-    public Game(String player1, String name, String player2)
-    {
-        this.setPlayer1(player1);
-        this.setPlayer2(player2);
-        this.setConnectionId(name);
-        this.setGameState("E|E|E|E|E|E|E|E|E");
-        this.setCompleted(false);
-    }
-    public Game()
-    {
-        this.setGameState("E|E|E|E|E|E|E|E|E");
-        this.setCompleted(false);
-    }
+    public void setTurn(String turn) { Turn = turn; }
 }

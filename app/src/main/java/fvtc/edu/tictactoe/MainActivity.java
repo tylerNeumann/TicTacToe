@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
                         board.cellvalues = cellvalues;
 
                         turn = turn.equals("X") ? "O" : "X";
+                        game.setTurn(turn);
                         Log.d(TAG, "run: Turn changed to " + turn);
                         Log.d(TAG, "run: New Message : " + user + " : " + info);
                         setContentView(new DrawView(getMainActivity()));
