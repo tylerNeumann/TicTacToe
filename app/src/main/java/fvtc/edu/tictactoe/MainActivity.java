@@ -367,12 +367,12 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(TAG, "displayVictory: " + result);
             if(result == "3") {
-                //tvVictory.setText("It's a tie!");
+                tvVictory.setText("It's a tie!");
                 message = "It's a tie!";
             }
             else {
                 message = "Player " + result + " wins!";
-                //tvVictory.setText(message);
+                tvVictory.setText(message);
             }
             game.setWinner(result);
             game.setCompleted(true);

@@ -22,6 +22,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.microsoft.signalr.HubConnection;
+import com.microsoft.signalr.HubConnectionBuilder;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -80,21 +83,21 @@ public class GameListActivity extends AppCompatActivity {
 
     private void initSignalR(String from, String msg) {
 
-        /*HubConnection hubConnection = HubConnectionBuilder
+        HubConnection hubConnection = HubConnectionBuilder
                 .create("https://fvtcdp.azurewebsites.net/GameHub")
-                .build();*/
+                .build();
 
         Log.d(TAG, "initSignalR: Starting the hub connection...");
 
-        /*hubConnection.start().blockingAwait();
+        hubConnection.start().blockingAwait();
         hubConnection.invoke(Void.class, "GetConnectionId");
 
-        hubConnectionId = hubConnection.getConnectionId();*/
+        hubConnectionId = hubConnection.getConnectionId();
 
         Log.d(TAG, "initSignalR: Started the hub connection..." + hubConnectionId);
 
         // Great a callback method to receive messages.
-        /*hubConnection.on("ReceiveMessage", (user, message) -> {
+        hubConnection.on("ReceiveMessage", (user, message) -> {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -105,7 +108,7 @@ public class GameListActivity extends AppCompatActivity {
 
                 }
             });
-        }, String.class, String.class);*/
+        }, String.class, String.class);
 
         // Send a message
         //hubConnection.send("SendMessage", from, msg);

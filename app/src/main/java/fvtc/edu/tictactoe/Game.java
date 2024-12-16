@@ -97,4 +97,8 @@ public class Game {
     public String getTurn() { return Turn; }
 
     public void setTurn(String turn) { Turn = turn; }
+
+    public String getNextTurn(){
+        return getTurn().equals("X") ? "O" : "X";
+    }
 }

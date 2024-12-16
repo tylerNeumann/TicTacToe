@@ -149,10 +149,11 @@ public class RestClient {
             object.put("player1", game.getPlayer1());
             object.put("player2", game.getPlayer2());
             object.put("winner", game.getWinner());
+            object.put("nextturn", game.getNextTurn());
             object.put("completed", game.getCompleted());
             object.put("gamestate", game.getGameState());
             object.put("lastupdatedate", game.getLastUpdateDate());
-
+            Log.d(TAG, "executeRequest: next turn" + game.getNextTurn());
             final String requestBody = object.toString();
             Log.d(TAG, "executeRequest: " + requestBody);
 
@@ -166,7 +167,7 @@ public class RestClient {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d(TAG, "onErrorResponse: " + error.getMessage());
-                    Log.d(TAG, "onResponse: error2");
+                    Log.d(TAG, "onResponse: error2 on post method");
                     Log.i(TAG, "onErrorResponse: url = " + url);
                 }
             })
@@ -215,6 +216,7 @@ public class RestClient {
         try {
             executeRequest(game, url, context, volleyCallback, Method.POST);
         } catch (Exception e) {
+            Log.d(TAG, "execPostRequest: error");
             throw new RuntimeException(e);
         }
     }
